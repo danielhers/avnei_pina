@@ -22,11 +22,11 @@ def select2(T, C):
 
 
 def tag1(L, Cwt):
-    return [select([l], Cwt) for l in L]
+    return [select([[l]], Cwt) for l in L]
 
 
 def tag2(L, Cwt, Ct2):
-    T = [select([L[0]], Cwt)]
+    T = [select([[L[0]]], Cwt)]
     for l in L[1:]:
         T.append(select2(([l], T[-1]), (Cwt, Ct2)))
     return T

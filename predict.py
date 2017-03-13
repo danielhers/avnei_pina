@@ -5,8 +5,13 @@ import csv
 from itertools import product
 
 
+def argmax(l, C):
+    print(l)
+    return max(C[l].items())[1]
+
+
 def select(T, C):
-    return sorted(set(t for l in product(*T) if l in C for t in max(C[l].items())[1]))
+    return sorted(set(t for l in product(*T) if l in C for t in argmax(l, C)))
 
 
 def ngram(L, n, C):
