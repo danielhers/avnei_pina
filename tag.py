@@ -13,12 +13,12 @@ def common(xs):
 
 
 def prod(items):
-    dicts = [{tuple(v): k for k, v in d} for d in items]
+    dicts = [{v: k for k, vv in d for v in vv} for d in items]
     return [(reduce(mul, (d[i] for d in dicts)), i) for i in common(dicts)]
     
 
 def select2(T, C):
-    return max(prod([c[(t,)].items() for l in product(*T) for t, c in zip(l, C)]))[1]
+    return [max(prod([c[(t,)].items() for l in product(*T) for t, c in zip(l, C)]))[1]]
 
 
 def tag1(L, Cwt):
