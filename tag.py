@@ -21,6 +21,10 @@ def select2(T, C):
     return max(prod([c[(t,)].items() for l in product(*T) for t, c in zip(l, C)]))[1]
 
 
+def tag1(L, Cwt):
+    return [select([l], Cwt) for l in L]
+
+
 def tag2(L, Cwt, Ct2):
     T = [select([L[0]], Cwt)]
     for l in L[1:]:
@@ -33,5 +37,5 @@ if __name__ == "__main__":
         print("Usage: %s word_tag tag_ngram word ..." % sys.argv[0])
         sys.exit(1)
     Cwt, Ct2 = map(load_counts, sys.argv[1:3])
-    T = tag2(sys.argv[3:], Cwt, Ct2)
-    print(" ".join(map("/".join, T)))
+    for T in tag1(sys.argv[3:], Cwt), tag2(sys.argv[3:], Cwt, Ct2):
+        print(" ".join(map("/".join, T)))
