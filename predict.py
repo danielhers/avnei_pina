@@ -6,7 +6,6 @@ from itertools import product
 
 
 def argmax(l, C):
-    print(l)
     return max(C[l].items())[1]
 
 
