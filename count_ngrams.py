@@ -1,3 +1,4 @@
+import string
 from argparse import ArgumentParser
 from collections import Counter
 
@@ -11,9 +12,9 @@ from glob import glob
 def gen_ngrams(filename, n):
     with open(filename, encoding="utf-8") as f:
         for line in filter(None, tqdm(f, desc="Reading " + filename, unit=" lines", file=sys.stdout)):
-            tokens = line.strip().replace("“", "").replace("”", "").replace(" ", "").replace("，", "") \
-                if "zh" in filename else \
-                line.lower().replace('"', "").replace("'", "").replace(",", "").replace("-", "").strip().split()
+            line = line.lower().strip().translate(str.maketrans({key: None for key in string.punctuation}))
+            tokens = line.replace("“", "").replace("”", "").replace(" ", "").replace("，", "") \
+                if "zh" in filename else line.split()
             for i in range(len(tokens) - n + 1):
                 yield tuple(tokens[i:i + n])
 
