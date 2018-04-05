@@ -7,6 +7,7 @@ from operator import itemgetter
 
 from tqdm import tqdm
 from glob import glob
+import re
 
 
 def predict(tokens, counts_by_order):
@@ -25,10 +26,12 @@ def load_counts(patterns):
     counts_by_order = {}
     for pattern in patterns:
         for filename in glob(pattern) or pattern:
+            m = re.search(r"\d+", filename)
+            order = int(m.group(0)) if m else None
             with open(filename, encoding="utf-8") as f:
                 for key, count in tqdm(csv.reader(f), desc="Reading " + filename, unit=" lines"):
                     ngram = tuple(key.split())
-                    counts_by_order.setdefault(len(ngram), {})[ngram] = int(count)
+                    counts_by_order.setdefault(len(ngram) if order is None else order, {})[ngram] = int(count)
     return counts_by_order
 
 
