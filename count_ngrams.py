@@ -19,7 +19,7 @@ def gen_ngrams(filename, n):
                 yield tuple(tokens[i:i + n])
 
 
-def write_counts(counts, filename):
+def save_counts(counts, filename):
     with open(filename, "w", encoding="utf-8") as f:
         csv.writer(f).writerows(tqdm(((" ".join(k), v) for k, v in counts.most_common()),
                                      desc="Writing " + filename, unit=" lines", file=sys.stdout))
@@ -29,7 +29,7 @@ def count(text, order, out_dir):
     counts = Counter(gen_ngrams(text, n=order))
     os.makedirs(out_dir, exist_ok=True)
     basename, _ = os.path.splitext(os.path.basename(text))
-    write_counts(counts, os.path.join(out_dir, basename + ".%dgrams.csv" % order))
+    save_counts(counts, os.path.join(out_dir, basename + ".%dgrams.csv" % order))
 
 
 def main(args):
