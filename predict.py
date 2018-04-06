@@ -20,6 +20,7 @@ def predict(tokens, counts_by_order):
         if not prefixes:
             continue
         return max(prefixes, key=itemgetter(1))[0][-1], n
+    return None, None
 
 
 def load_counts(patterns):
@@ -43,8 +44,9 @@ def main(args):
         if line:
             tokens = line.split()
         token, n = predict(tuple(tokens), counts_by_order)
-        tokens.append(token)
-        print("[l=%d n=%d] %s" % (len(tokens), n, " ".join(tokens)))
+        if token:
+            tokens.append(token)
+            print("[l=%d n=%d] %s" % (len(tokens), n, " ".join(tokens)))
 
 
 if __name__ == "__main__":
