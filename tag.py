@@ -10,7 +10,7 @@ from predict import load_counts
 def predict(tokens, counts_by_order):
     tags = []
     for i in range(len(tokens)):
-        print(i)
+        print(tokens[i])
         lex_counts = counts_by_order.get(0)
         scores = lex_score = {t: c for ((w, t), c) in lex_counts.items() if w == tokens[i]} if lex_counts else {}
         print("  %d %s" % (0, sorted(lex_score.items(), key=itemgetter(1), reverse=True)))
