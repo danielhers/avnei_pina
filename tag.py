@@ -12,7 +12,7 @@ def predict(tokens, counts_by_order):
     for i in range(len(tokens)):
         print(i)
         lex_counts = counts_by_order.get(0)
-        lex_score = {t: c for ((w, t), c) in lex_counts.items() if w == tokens[i]} if lex_counts else {}
+        scores = lex_score = {t: c for ((w, t), c) in lex_counts.items() if w == tokens[i]} if lex_counts else {}
         print("  %d %s" % (0, sorted(lex_score.items(), key=itemgetter(1), reverse=True)))
         trans_score = {}
         for n in range(len(tags) + 1, 0, -1):
@@ -23,7 +23,10 @@ def predict(tokens, counts_by_order):
             print("  %d %s" % (n, sorted(trans_score.items(), key=itemgetter(1), reverse=True)))
             if trans_score:
                 break
-        tags.append(max(set(lex_score) | set(trans_score), key=lambda x: lex_score.get(x, 1) * trans_score.get(x, 1)))
+        if trans_score:
+            scores = {x: lex_score[x] * trans_score[x] for x in set(lex_score) & set(trans_score)}
+            print("    %s" % (sorted(scores.items(), key=itemgetter(1), reverse=True)))
+        tags.append(max(scores, key=scores.get))
     return tags
 
 
