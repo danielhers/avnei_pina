@@ -26,7 +26,7 @@ def predict(tokens, counts_by_order):
 def load_counts(patterns):
     counts_by_order = {}
     for pattern in patterns:
-        for filename in glob(pattern) or pattern:
+        for filename in glob(pattern) or [pattern]:
             m = re.search(r"\d+", filename)
             order = int(m.group(0)) if m else None
             with open(filename, encoding="utf-8") as f:

@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 def all_files():
     for pattern in sys.argv[1:]:
-        yield from glob(pattern) or pattern
+        yield from glob(pattern) or [pattern]
 
 
 for filename in tqdm(list(all_files()), desc="Converting files", unit="file"):
