@@ -1,41 +1,43 @@
 #!/usr/bin/python3
 
 import sys
-from itertools import product
-from functools import reduce
-from operator import mul
+from argparse import ArgumentParser
+from operator import itemgetter
 
-from predict import load_counts, select
-
-
-def common(xs):
-    return set(xs[0]).intersection(*xs[1:])
+from predict import load_counts
 
 
-def prod(items):
-    dicts = [{v: k for k, vv in d for v in vv} for d in items]
-    return [(reduce(mul, (d[i] for d in dicts)), i) for i in common(dicts)]
-    
+def predict(tokens, counts_by_order):
+    tags = []
+    for i in range(len(tokens)):
+        print(tokens[i])
+        lex_counts = counts_by_order.get(0)
+        scores = lex_score = {t: c for ((w, t), c) in lex_counts.items() if w == tokens[i]} if lex_counts else {}
+        print("  %d %s" % (0, sorted(lex_score.items(), key=itemgetter(1), reverse=True)))
+        trans_score = {}
+        for n in range(len(tags) + 1, 0, -1):
+            counts = counts_by_order.get(n)
+            if not counts:
+                continue
+            trans_score = {t[-1]: c for t, c in counts.items() if t[:-1] == tuple(tags[len(tags) + 1 - n:])}
+            print("  %d %s" % (n, sorted(trans_score.items(), key=itemgetter(1), reverse=True)))
+            if trans_score:
+                break
+        if trans_score:
+            scores = {x: lex_score[x] * trans_score[x] for x in set(lex_score) & set(trans_score)}
+            print("    %s" % (sorted(scores.items(), key=itemgetter(1), reverse=True)))
+        tags.append(max(scores, key=scores.get))
+    return tags
 
-def select2(T, C):
-    return [max(prod([c[(t,)].items() for l in product(*T) for t, c in zip(l, C)]))[1]]
 
-
-def tag1(L, Cwt):
-    return [select([[l]], Cwt) for l in L]
-
-
-def tag2(L, Cwt, Ct2):
-    T = [select([[L[0]]], Cwt)]
-    for l in L[1:]:
-        T.append(select2(([l], T[-1]), (Cwt, Ct2)))
-    return T
+def main(args):
+    counts_by_order = load_counts(args.counts)
+    for line in sys.stdin:
+        tags = predict(tuple(line.strip().split()), counts_by_order)
+        print("[l=%d] %s" % (len(tags), " ".join(tags)))
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: %s word_tag tag_ngram word ..." % sys.argv[0])
-        sys.exit(1)
-    Cwt, Ct2 = map(load_counts, sys.argv[1:3])
-    for T in tag1(sys.argv[3:], Cwt), tag2(sys.argv[3:], Cwt, Ct2):
-        print(" ".join(map("/".join, T)))
+    argparser = ArgumentParser()
+    argparser.add_argument("counts", nargs="+")
+    main(argparser.parse_args())
