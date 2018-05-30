@@ -1,0 +1,11 @@
+# sent_id = reviews-398243-0011
+# text = He is my mechanic going forward !
+# doc_id = 
+1	He	he	PRP	PRON	Case=Nom|Gender=Masc|Number=Sing|Person=3|PronType=Prs	4	nsubj	_	_
+2	is	be	VBZ	AUX	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	cop	_	_
+3	my	my	PRP$	PRON	Number=Sing|Person=1|Poss=Yes|PronType=Prs	4	nmod	_	_
+4	mechanic	mechanic	NN	NOUN	Number=Sing	0	root	_	_
+5	going	go	VBG	VERB	VerbForm=Ger	4	acl	_	_
+6	forward	forward	RB	ADV	_	5	advmod	_	_
+7	!	!	.	PUNCT	_	4	punct	_	_
+

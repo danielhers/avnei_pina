@@ -1,0 +1,9 @@
+# sent_id = reviews-005636-0001
+# text = I LOVE MY GYM !
+# doc_id = 
+1	I	I	PRP	PRON	Case=Nom|Number=Sing|Person=1|PronType=Prs	2	nsubj	_	_
+2	LOVE	love	VBP	VERB	Mood=Ind|Tense=Pres|VerbForm=Fin	0	root	_	_
+3	MY	my	PRP$	PRON	Number=Sing|Person=1|Poss=Yes|PronType=Prs	4	nmod	_	_
+4	GYM	gym	NN	NOUN	Number=Sing	2	obj	_	_
+5	!	!	.	PUNCT	_	2	punct	_	_
+

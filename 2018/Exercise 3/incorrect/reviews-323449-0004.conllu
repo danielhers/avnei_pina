@@ -1,0 +1,11 @@
+# sent_id = reviews-323449-0004
+# text = This place is marginal at best .
+# doc_id = 
+1	This	this	DT	DET	Number=Sing|PronType=Dem	2	det	_	_
+2	place	place	NN	NOUN	Number=Sing	4	nsubj	_	_
+3	is	be	VBZ	AUX	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	4	cop	_	_
+4	marginal	marginal	JJ	ADJ	Degree=Pos	0	root	_	_
+5	at	at	RB	ADV	_	6	case	_	_
+6	best	best	RBS	ADV	Degree=Sup	4	advmod	_	_
+7	.	.	.	PUNCT	_	4	punct	_	_
+

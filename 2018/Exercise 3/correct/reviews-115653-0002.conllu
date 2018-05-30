@@ -1,0 +1,11 @@
+# sent_id = reviews-115653-0002
+# text = Dr. Faris is a great doctor !
+# doc_id = 
+1	Dr.	Dr.	NNP	PROPN	Number=Sing	6	nsubj	_	_
+2	Faris	Faris	NNP	PROPN	Number=Sing	1	flat	_	_
+3	is	be	VBZ	AUX	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	6	cop	_	_
+4	a	a	DT	DET	Definite=Ind|PronType=Art	6	det	_	_
+5	great	great	JJ	ADJ	Degree=Pos	6	amod	_	_
+6	doctor	doctor	NN	NOUN	Number=Sing	0	root	_	_
+7	!	!	.	PUNCT	_	6	punct	_	_
+
